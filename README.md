@@ -1,3 +1,3 @@
-# shopping_list
+# Shopping_List
 
-A new Flutter project.
+A simple Flutter-based shopping list application.
