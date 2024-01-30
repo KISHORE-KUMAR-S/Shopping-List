@@ -1,3 +1,3 @@
-# Shopping_List
+# Shopping List
 
 A simple Flutter-based shopping list application.
