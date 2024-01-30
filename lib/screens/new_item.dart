@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shopping_list/data/categories.dart';
 import 'package:shopping_list/model/category.dart';
-// import 'package:shopping_list/model/grocery_item_model.dart';
+import 'package:shopping_list/model/grocery_item_model.dart';
 
 class NewItem extends StatefulWidget {
   const NewItem({super.key});
@@ -19,10 +19,15 @@ class _NewItemState extends State<NewItem> {
   var _enteredName = '';
   var _enteredQuantity = 1;
   var _selectedCategory = categories[Categories.dairy];
+  var _isSending = false;
 
   void _saveItem() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
+
+      setState(() {
+        _isSending = true;
+      });
 
       final url = Uri.https(
           'shopping-list-a7936-default-rtdb.asia-southeast1.firebasedatabase.app',
@@ -40,16 +45,18 @@ class _NewItemState extends State<NewItem> {
         ),
       );
 
-      // Navigator.of(context).pop(
-      //   GroceryItem(DateTime.now().toString(), _enteredName, _enteredQuantity,
-      //       _selectedCategory!),
-      // );
+      final responseData = json.decode(response.body);
 
       if (!context.mounted) {
         //When the context is not the part of the screen anymore.
         return;
       }
-      Navigator.pop(context);
+
+      Navigator.of(context).pop(
+        GroceryItem(responseData['name'], _enteredName, _enteredQuantity,
+            _selectedCategory!),
+      );
+      // Navigator.pop(context);
     }
   }
 
@@ -147,9 +154,17 @@ class _NewItemState extends State<NewItem> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     TextButton(
-                        onPressed: _resetItem, child: const Text('Reset')),
+                        onPressed: _isSending ? null : _resetItem,
+                        child: const Text('Reset')),
                     ElevatedButton(
-                        onPressed: _saveItem, child: const Text('Add Item')),
+                        onPressed: _isSending ? null : _saveItem,
+                        child: _isSending
+                            ? const SizedBox(
+                                height: 16,
+                                width: 16,
+                                child: CircularProgressIndicator(),
+                              )
+                            : const Text('Add Item')),
                   ],
                 ),
               ],
