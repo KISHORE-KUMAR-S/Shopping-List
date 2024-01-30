@@ -3,7 +3,7 @@ import 'package:shopping_list/model/category.dart';
 
 Map<Categories, Category> categories = {
   Categories.dairy: const Category(
-    'Carbs',
+    'Dairy',
     Color.fromARGB(255, 173, 216, 230),
   ),
   Categories.fruit: const Category(
@@ -15,7 +15,7 @@ Map<Categories, Category> categories = {
     Color.fromARGB(255, 201, 160, 220),
   ),
   Categories.convenience: const Category(
-    'Hygeine',
+    'Convenience',
     Color.fromARGB(255, 128, 128, 128),
   ),
   Categories.carbs: const Category(
@@ -23,7 +23,7 @@ Map<Categories, Category> categories = {
     Color.fromARGB(255, 255, 255, 0),
   ),
   Categories.vegetables: const Category(
-    'Carbs',
+    'Vegetables',
     Color.fromARGB(255, 0, 128, 0),
   ),
   Categories.meat: const Category(
